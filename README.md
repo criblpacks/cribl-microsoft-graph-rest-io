@@ -49,7 +49,7 @@ Splunk data is mapped to the following sourcetypes - these are the sourcetypes u
 
 ### Configure Output Format
 
-Each data type can be configured to output data in either OCSF or normalized JSON (Splunk) format. Enable *only one* format for each of the following pipelines:
+Each data type can be configured to output data in either normalized JSON (default), OCSF, or Splunk (`_raw` + Splunk fields) format. Enable *only one* format for each of the following pipelines:
 * ```cribl_azure_graph_signins```
 * ```cribl_azure_graph_users```
 * ```cribl_azure_graph_devices```
