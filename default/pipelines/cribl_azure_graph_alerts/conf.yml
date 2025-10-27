@@ -124,8 +124,8 @@ functions:
           value: "index ? index : C.vars.azure_graph_default_splunk_index"
         - disabled: false
           name: sourcetype
-          value: "'azure:aad:user'"
+          value: "'azure:aad:alerts'"
         - disabled: false
           name: source
-          value: "source ? source : 'cribl-azure-graph-users-rest'"
+          value: "source ? source : 'cribl-azure-graph-alerts-rest'"
     groupId: WK4B9j

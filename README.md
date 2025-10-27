@@ -73,6 +73,10 @@ Upgrading certain Cribl Packs using the same Pack ID can have unintended consequ
 
 ## Release Notes
 
+### Version 1.0.1
+- State Tracking fix for `in_azure_graph_security_alerts_v2` Collector - updated the `filter` request parameter. 
+- Updated `source` and `sourcetype` for `cribl_azure_graph_alerts` and `cribl_azure_graph_alerts_v2` pipelines. 
+
 ### Version 1.0.0
 Initial release
 

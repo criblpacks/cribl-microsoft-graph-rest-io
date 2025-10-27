@@ -472,12 +472,7 @@ in_azure_graph_security_alerts_v2:
       tokenRespAttribute: access_token
       collectRequestParams:
         - name: filter
-          value: "`createdDateTime+ge+${earliest ?
-            C.Time.strftime(earliest,'%Y-%m-%dT%H:%M:%S.%fZ') :
-            C.Time.strftime(Date.now()/1000 -
-            60*60*5*1000,'%Y-%m-%dT%H:%M:%S.%fZ')}+and+createdDateTime+le+${ear\
-            liest ? C.Time.strftime(earliest,'%Y-%m-%dT%H:%M:%S.%fZ') :
-            C.Time.strftime(Date.now()/1000,'%Y-%m-%dT%H:%M:%S.%fZ')}`"
+          value: "`createdDateTime ge ${state.latestTime ? C.Time.strftime(state.latestTime,'%Y-%m-%dT%H:%M:%S.%fZ') : C.Time.strftime(Date.now()/1000 - 60*60*24*30,'%Y-%m-%dT%H:%M:%S.%fZ')} and createdDateTime le ${latest ? C.Time.strftime(latest,'%Y-%m-%dT%H:%M:%S.%fZ') : C.Time.strftime(Date.now()/1000,'%Y-%m-%dT%H:%M:%S.%fZ')}`"
     destructive: false
     encoding: utf8
     type: rest
