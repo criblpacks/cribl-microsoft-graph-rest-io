@@ -126,8 +126,8 @@ functions:
           value: "index ? index : C.vars['microsoft_graph_default_splunk_index']"
         - disabled: false
           name: sourcetype
-          value: "'azure:aad:signins'"
+          value: "'azure:aad:signin'"
         - disabled: false
           name: source
-          value: "source ? source : 'cribl-azure-graph-signins-rest'"
+          value: "source ? source : 'cribl-azure-graph-signin-rest'"
     groupId: WK4B9j
