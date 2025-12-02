@@ -65,14 +65,6 @@ functions:
       srcField: json_parsed
     groupId: VQH9ac
     description: Parse the filtered JSON field
-  - id: eval
-    filter: "true"
-    disabled: true
-    conf:
-      remove:
-        - json_raw
-    groupId: VQH9ac
-    description: Remove unneeded json_raw field
   - id: comment
     filter: "true"
     disabled: false
@@ -81,7 +73,7 @@ functions:
     groupId: WK4B9j
   - id: chain
     filter: "true"
-    disabled: false
+    disabled: true
     conf:
       processor: cribl_azure_graph_alerts_ocsf
     groupId: WK4B9j
@@ -94,7 +86,7 @@ functions:
     groupId: WK4B9j
   - id: serialize
     filter: "true"
-    disabled: true
+    disabled: false
     conf:
       type: json
       dstField: _raw
@@ -107,7 +99,7 @@ functions:
     groupId: WK4B9j
   - id: eval
     filter: "true"
-    disabled: true
+    disabled: false
     conf:
       remove:
         - "*"
@@ -121,7 +113,7 @@ functions:
       add:
         - disabled: false
           name: index
-          value: "index ? index : C.vars.azure_graph_default_splunk_index"
+          value: "index ? index : C.vars['microsoft_graph_default_splunk_index']"
         - disabled: false
           name: sourcetype
           value: "'azure:aad:alerts'"

@@ -44,6 +44,7 @@ in_azure_graph_security_alerts:
       decodeUrl: true
       rejectUnauthorized: false
       captureHeaders: false
+      stopOnEmptyResults: false
       safeHeaders: []
       retryRules:
         type: backoff
@@ -60,27 +61,29 @@ in_azure_graph_security_alerts:
         retryHeaderName: retry-after
       __scheduling:
         stateTracking: {}
-      loginUrl: "'https://login.microsoftonline.com/432739cb-8e35-44eb-95d1-2d31400c5\
-        99b/oauth2/v2.0/token'"
-      loginBody: "`client_secret=${password}&scope=https://graph.microsoft.com/.defau\
-        lt&client_id=${username}&grant_type=client_credentials`"
+      loginUrl: "`https://login.microsoftonline.com/${C.vars['microsoft_graph_tenant_\
+        id']}/oauth2/v2.0/token`"
+      loginBody: "`client_secret=${C.vars['microsoft_graph_client_secret']}&scope=htt\
+        ps://graph.microsoft.com/.default&client_id=${C.vars['microsoft_graph_c\
+        lient_id']}&grant_type=client_credentials`"
+      getAuthTokenFromHeader: false
       authHeaderKey: Authorization
       authHeaderExpr: "`Bearer ${token}`"
       tokenRespAttribute: access_token
       collectUrl: "'https://graph.microsoft.com/v1.0/security/alerts'"
       collectRequestParams:
         - name: filter
-          value: "`createdDateTime+ge+'${earliest ?
-            C.Time.strftime(earliest,'%Y-%m-%dT%H:%M:%S.%fZ') :
+          value: "`createdDateTime+ge+'${state.latestTime ?
+            C.Time.strftime(state.latestTime,'%Y-%m-%dT%H:%M:%S.%fZ') :
             C.Time.strftime(Date.now()/1000 -
-            5*60,'%Y-%m-%dT%H:%M:%S.%fZ')}'+and+createdDateTime+le+'${earliest ?
-            C.Time.strftime(earliest,'%Y-%m-%dT%H:%M:%S.%fZ') :
+            (60*60*24*7),'%Y-%m-%dT%H:%M:%S.%fZ')}'+and+createdDateTime+le+'${l\
+            atest ? C.Time.strftime(latest,'%Y-%m-%dT%H:%M:%S.%fZ') :
             C.Time.strftime(Date.now()/1000,'%Y-%m-%dT%H:%M:%S.%fZ')}`"
       collectRequestHeaders:
         - name: content-type
           value: "'application/x-www-form-urlencoded'"
-      username: YOUR_CLIENT_ID
-      password: YOUR_CLIENT_SECRET
+      username: SET_VARIABLE_INSTEAD
+      password: SET_VARIABLE_INSTEAD
     destructive: false
     type: rest
   input:
@@ -97,6 +100,7 @@ in_azure_graph_security_alerts:
         value: "'cribl-microsoft-graph-rest-io.microsoft-graph-security-alerts'"
   savedState: {}
   notifications: []
+  description: DO NOT USE - deprecated.
 in_azure_graph_devices:
   type: collection
   ttl: 4h
@@ -138,6 +142,7 @@ in_azure_graph_devices:
       decodeUrl: true
       rejectUnauthorized: false
       captureHeaders: false
+      stopOnEmptyResults: false
       safeHeaders: []
       retryRules:
         type: backoff
@@ -154,10 +159,12 @@ in_azure_graph_devices:
         retryHeaderName: retry-after
       __scheduling:
         stateTracking: {}
-      loginUrl: "'https://login.microsoftonline.com/432739cb-8e35-44eb-95d1-2d31400c5\
-        99b/oauth2/v2.0/token'"
-      loginBody: "`client_secret=${password}&scope=https://graph.microsoft.com/.defau\
-        lt&client_id=${username}&grant_type=client_credentials`"
+      loginUrl: "`https://login.microsoftonline.com/${C.vars['microsoft_graph_tenant_\
+        id']}/oauth2/v2.0/token`"
+      loginBody: "`client_secret=${C.vars['microsoft_graph_client_secret']}&scope=htt\
+        ps://graph.microsoft.com/.default&client_id=${C.vars['microsoft_graph_c\
+        lient_id']}&grant_type=client_credentials`"
+      getAuthTokenFromHeader: false
       authHeaderKey: Authorization
       authHeaderExpr: "`Bearer ${token}`"
       tokenRespAttribute: access_token
@@ -166,8 +173,8 @@ in_azure_graph_devices:
       collectRequestHeaders:
         - name: content-type
           value: "'application/x-www-form-urlencoded'"
-      username: YOUR_CLIENT_ID
-      password: YOUR_CLIENT_SECRET
+      username: SET_VARIABLE_INSTEAD
+      password: SET_VARIABLE_INSTEAD
     destructive: false
     type: rest
   input:
@@ -236,6 +243,7 @@ in_azure_graph_users:
       decodeUrl: false
       rejectUnauthorized: true
       captureHeaders: false
+      stopOnEmptyResults: false
       safeHeaders: []
       retryRules:
         type: backoff
@@ -252,18 +260,20 @@ in_azure_graph_users:
         retryHeaderName: retry-after
       __scheduling:
         stateTracking: {}
-      loginUrl: "`https://login.microsoftonline.com/432739cb-8e35-44eb-95d1-2d31400c5\
-        99b/oauth2/v2.0/token`"
-      loginBody: "`client_secret=${password}&scope=https://graph.microsoft.com/.defau\
-        lt&client_id=${username}&grant_type=client_credentials`"
+      loginUrl: "`https://login.microsoftonline.com/${C.vars['microsoft_graph_tenant_\
+        id']}/oauth2/v2.0/token`"
+      loginBody: "`client_secret=${C.vars['microsoft_graph_client_secret']}&scope=htt\
+        ps://graph.microsoft.com/.default&client_id=${C.vars['microsoft_graph_c\
+        lient_id']}&grant_type=client_credentials`"
+      getAuthTokenFromHeader: false
       authHeaderKey: Authorization
       authHeaderExpr: "`Bearer ${token}`"
       collectUrl: "`https://graph.microsoft.com/v1.0/users/{${id}}`"
       collectRequestHeaders:
         - name: content-type
           value: "'application/x-www-form-urlencoded'"
-      username: YOUR_CLIENT_ID
-      password: YOUR_CLIENT_SECRET
+      username: SET_VARIABLE_INSTEAD
+      password: SET_VARIABLE_INSTEAD
       tokenRespAttribute: access_token
     destructive: false
     encoding: utf8
@@ -346,6 +356,7 @@ in_azure_graph_signins:
       decodeUrl: false
       rejectUnauthorized: true
       captureHeaders: false
+      stopOnEmptyResults: false
       safeHeaders: []
       retryRules:
         type: backoff
@@ -362,19 +373,21 @@ in_azure_graph_signins:
         retryHeaderName: retry-after
       __scheduling:
         stateTracking: {}
-      loginUrl: "`https://login.microsoftonline.com/432739cb-8e35-44eb-95d1-2d31400c5\
-        99b/oauth2/v2.0/token`"
-      loginBody: "`client_secret=${password}&scope=https://graph.microsoft.com/.defau\
-        lt&client_id=${username}&grant_type=client_credentials`"
+      loginUrl: "`https://login.microsoftonline.com/${C.vars['microsoft_graph_tenant_\
+        id']}/oauth2/v2.0/token`"
+      loginBody: "`client_secret=${C.vars['microsoft_graph_client_secret']}&scope=htt\
+        ps://graph.microsoft.com/.default&client_id=${C.vars['microsoft_graph_c\
+        lient_id']}&grant_type=client_credentials`"
+      getAuthTokenFromHeader: false
       authHeaderKey: Authorization
       authHeaderExpr: "`Bearer ${token}`"
-      username: YOUR_CLIENT_ID
-      password: YOUR_CLIENT_SECRET
+      username: SET_VARIABLE_INSTEAD
+      password: SET_VARIABLE_INSTEAD
       tokenRespAttribute: access_token
       collectUrl: "`https://graph.microsoft.com/v1.0/auditLogs/signIns?$orderby=creat\
-        edDateTime&$filter=createdDateTime+ge+`+C.Time.strftime((earliest * 1000
-        || Date.now()/1000-(5*60)),'%Y-%m-%dT%H:%M:%S.%fZ'
-        )+`+and+createdDateTime+le+`+C.Time.strftime(latest * 1000 ||
+        edDateTime&$filter=createdDateTime+ge+`+C.Time.strftime((state.latestTi\
+        me || Date.now()/1000-(60*60*24*7)),'%Y-%m-%dT%H:%M:%S.%fZ'
+        )+`+and+createdDateTime+le+`+C.Time.strftime(latest ||
         Date.now()/1000,'%Y-%m-%dT%H:%M:%S.%fZ' )"
       collectRequestParams: []
       collectRequestHeaders:
@@ -441,6 +454,7 @@ in_azure_graph_security_alerts_v2:
       decodeUrl: false
       rejectUnauthorized: true
       captureHeaders: false
+      stopOnEmptyResults: false
       safeHeaders: []
       retryRules:
         type: backoff
@@ -457,22 +471,29 @@ in_azure_graph_security_alerts_v2:
         retryHeaderName: retry-after
       __scheduling:
         stateTracking: {}
-      loginUrl: "'https://login.microsoftonline.com/432739cb-8e35-44eb-95d1-2d31400c5\
-        99b/oauth2/v2.0/token'"
-      loginBody: "`client_secret=${password}&scope=https://graph.microsoft.com/.defau\
-        lt&client_id=${username}&grant_type=client_credentials`"
+      loginUrl: "`https://login.microsoftonline.com/${C.vars['microsoft_graph_tenant_\
+        id']}/oauth2/v2.0/token`"
+      loginBody: "`client_secret=${C.vars['microsoft_graph_client_secret']}&scope=htt\
+        ps://graph.microsoft.com/.default&client_id=${C.vars['microsoft_graph_c\
+        lient_id']}&grant_type=client_credentials`"
+      getAuthTokenFromHeader: false
       authHeaderKey: Authorization
       authHeaderExpr: "`Bearer ${token}`"
       collectUrl: "'https://graph.microsoft.com/v1.0/security/alerts_v2'"
       collectRequestHeaders:
         - name: content-type
           value: "'application/x-www-form-urlencoded'"
-      username: YOUR_CLIENT_ID
-      password: YOUR_CLIENT_SECRET
+      username: SET_VARIABLE_INSTEAD
+      password: SET_VARIABLE_INSTEAD
       tokenRespAttribute: access_token
       collectRequestParams:
         - name: filter
-          value: "`createdDateTime ge ${state.latestTime ? C.Time.strftime(state.latestTime,'%Y-%m-%dT%H:%M:%S.%fZ') : C.Time.strftime(Date.now()/1000 - 60*60*24*30,'%Y-%m-%dT%H:%M:%S.%fZ')} and createdDateTime le ${latest ? C.Time.strftime(latest,'%Y-%m-%dT%H:%M:%S.%fZ') : C.Time.strftime(Date.now()/1000,'%Y-%m-%dT%H:%M:%S.%fZ')}`"
+          value: "`createdDateTime ge ${state.latestTime ?
+            C.Time.strftime(state.latestTime,'%Y-%m-%dT%H:%M:%S.%fZ') :
+            C.Time.strftime(Date.now()/1000 -
+            60*60*24*30,'%Y-%m-%dT%H:%M:%S.%fZ')} and createdDateTime le
+            ${latest ? C.Time.strftime(latest,'%Y-%m-%dT%H:%M:%S.%fZ') :
+            C.Time.strftime(Date.now()/1000,'%Y-%m-%dT%H:%M:%S.%fZ')}`"
     destructive: false
     encoding: utf8
     type: rest
