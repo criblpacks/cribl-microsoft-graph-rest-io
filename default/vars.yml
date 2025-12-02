@@ -1,4 +1,19 @@
-azure_graph_default_splunk_index:
+microsoft_graph_tenant_id:
+  type: string
+  lib: custom
+  value: "'YOUR_TENANT_ID'"
+  description: REQUIRED
+microsoft_graph_client_id:
+  type: string
+  lib: custom
+  description: REQUIRED
+  value: "'YOUR_CLIENT_ID'"
+microsoft_graph_client_secret:
+  type: string
+  lib: custom
+  value: "'YOUR_CLIENT_SECRET'"
+  description: REQUIRED
+microsoft_graph_default_splunk_index:
   type: any
   lib: custom
   value: "'azure'"

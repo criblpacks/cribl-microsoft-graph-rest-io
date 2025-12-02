@@ -20,7 +20,6 @@ Splunk data is mapped to the following sourcetypes - these are the sourcetypes u
 * Azure Signins: `sourcetype=azure:aad:signin`
 * Azure Users: `sourcetype=azure:aad:user`
 * Azure Device Details:`sourcetype=azure:aad:device`
-* Legacy Azure Alerts: `sourcetype=ms:graph:security:alerts`
 * Azure Alerts V2: `sourcetype=ms:graph:security:alerts:v2`
 
 
@@ -39,21 +38,20 @@ Splunk data is mapped to the following sourcetypes - these are the sourcetypes u
   * SecurityAlert.Read.All
   * SecurityEvents.Read.All
   * User.Read.All
-* Add the ```Tenant ID```, ```Client ID``` and ```Client Secret``` to each Collector.
+* Update the variables for ```Tenant ID```, ```Client ID``` and ```Client Secret``` with the correct values.
 * Perform a Run > Preview to verify that each Collector works correctly.
 * Schedule the Collectors and adjust the schedule as needed. Collectors requiring State Tracking should already have it enabled. Default schedules for each are:
    *  Signins: Every 5 minutes with default State Tracking
-   *  Alerts: Every 5 minutes with default State Tracking
+   *  Alerts V2: Every 5 minutes with default State Tracking
    *  Users: Once/day - this endpoint is configured to retrieve all available Users so keep that in mind.
    *  Devices: Once/day - this endpoint is configured to retrieve all available Devices so keep that in mind.
 
 ### Configure Output Format
 
-Each data type can be configured to output data in either normalized JSON (default), OCSF, or Splunk (`_raw` + Splunk fields) format. Enable *only one* format for each of the following pipelines:
+Each data type can be configured to output data in either normalized JSON, OCSF, or Splunk (`_raw` + Splunk fields) format. Enable *only one* format for each of the following pipelines:
 * ```cribl_azure_graph_signins```
 * ```cribl_azure_graph_users```
 * ```cribl_azure_graph_devices```
-* ```cribl_azure_graph_alerts```
 * ```cribl_azure_graph_alerts_v2```
 
 ### Configure your Destination/Update Pack Routes
@@ -65,13 +63,20 @@ Once everything is configured, perform a Commit & Deploy to enable data collecti
 ### Variables
 
 The Pack has the following variables:
-* `azure_graph_default_splunk_index`: Default index for the Splunk output - defaults to `azure`.
+* `microsoft_graph_default_splunk_index`: Default index for the Splunk output - defaults to `azure`.
+* `microsoft_graph_tenant_id`: Your Microsoft Tenant ID
+* `microsoft_graph_client_id`: Your Microsoft Client ID
+* `microsoft_graph_client_secret`: Your Microsoft Client Secret
 
 ## Upgrades
 
 Upgrading certain Cribl Packs using the same Pack ID can have unintended consequences. See [Upgrading an Existing Pack](https://docs.cribl.io/stream/packs#upgrading) for details.
 
 ## Release Notes
+
+### Version 1.1.0
+* Converted Collectors to use variables wherever possible
+* State tracking fixes for Alerts V2 and Signins
 
 ### Version 1.0.0
 Initial release

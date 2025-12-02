@@ -37,6 +37,7 @@ functions:
       dstField: json_parsed
       remove:
         - _raw
+      fieldFilterExpr: value !== '' && value !== null
     groupId: VQH9ac
   - id: code
     filter: "true"
@@ -82,7 +83,7 @@ functions:
     groupId: WK4B9j
   - id: chain
     filter: "true"
-    disabled: false
+    disabled: true
     conf:
       processor: cribl_azure_graph_signins_ocsf
     groupId: WK4B9j
@@ -95,7 +96,7 @@ functions:
     groupId: WK4B9j
   - id: serialize
     filter: "true"
-    disabled: true
+    disabled: false
     conf:
       type: json
       dstField: _raw
@@ -108,7 +109,7 @@ functions:
     groupId: WK4B9j
   - id: eval
     filter: "true"
-    disabled: true
+    disabled: false
     conf:
       remove:
         - "*"
@@ -122,7 +123,7 @@ functions:
       add:
         - disabled: false
           name: index
-          value: "index ? index : C.vars.azure_graph_default_splunk_index"
+          value: "index ? index : C.vars['microsoft_graph_default_splunk_index']"
         - disabled: false
           name: sourcetype
           value: "'azure:aad:user'"
