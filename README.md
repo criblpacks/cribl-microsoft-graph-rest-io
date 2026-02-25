@@ -74,6 +74,11 @@ Upgrading certain Cribl Packs using the same Pack ID can have unintended consequ
 
 ## Release Notes
 
+### Version 1.1.1
+- Removed included Splunk HEC Destination
+- Pagination fix for AlertsV2
+- Reduced AlertsV2 backfill from 30 days to 7 days
+
 ### Version 1.1.0
 - Converted Collectors to use variables wherever possible
 - State tracking fixes for Alerts V2 and Signins
