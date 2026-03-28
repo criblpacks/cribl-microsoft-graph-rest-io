@@ -12,7 +12,8 @@ routes:
     outputExpression: null
     filter: __packsource == 'cribl-microsoft-graph-rest-io.microsoft-graph-signins'
     clones: []
-    output: default
+    targetContext: group
+    output: __group
   - id: J8RjIg
     name: cribl_azure_graph_devices_route
     final: true
@@ -23,7 +24,8 @@ routes:
     outputExpression: null
     filter: __packsource == 'cribl-microsoft-graph-rest-io.microsoft-graph-devices'
     clones: []
-    output: default
+    targetContext: group
+    output: __group
   - id: 7ykZK4
     name: cribl_azure_graph_users_route
     final: true
@@ -34,7 +36,8 @@ routes:
     outputExpression: null
     filter: __packsource == 'cribl-microsoft-graph-rest-io.microsoft-graph-users'
     clones: []
-    output: default
+    targetContext: group
+    output: __group
   - id: Ty5CQP
     name: cribl_azure_graph_alerts_route
     final: true
@@ -46,7 +49,8 @@ routes:
     filter: __packsource ==
       'cribl-microsoft-graph-rest-io.microsoft-graph-security-alerts'
     clones: []
-    output: default
+    targetContext: group
+    output: __group
   - id: 3sm2Du
     name: cribl_azure_graph_alerts_v2_route
     final: true
@@ -58,7 +62,8 @@ routes:
     filter: __packsource ==
       'cribl-microsoft-graph-rest-io.microsoft-graph-security-alerts-v2'
     clones: []
-    output: default
+    targetContext: group
+    output: __group
   - id: default
     name: default
     final: true
@@ -69,4 +74,5 @@ routes:
     outputExpression: null
     filter: "true"
     clones: []
-    output: default
+    targetContext: group
+    output: __group

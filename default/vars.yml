@@ -9,9 +9,9 @@ microsoft_graph_client_id:
   description: REQUIRED
   value: "'YOUR_CLIENT_ID'"
 microsoft_graph_client_secret:
-  type: string
+  type: encryptedString
   lib: custom
-  value: "'YOUR_CLIENT_SECRET'"
+  value: "YOUR_CLIENT_SECRET"
   description: REQUIRED
 microsoft_graph_default_splunk_index:
   type: any
